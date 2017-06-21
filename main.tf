@@ -22,7 +22,7 @@ resource "aws_db_instance" "main_rds_instance" {
     vpc_security_group_ids = ["${aws_security_group.main_db_access.id}"]
 
     # We're creating a subnet group in the module and passing in the name
-    db_subnet_group_name = "${aws_db_subnet_group.main_db_subnet_group.name}"
+    db_subnet_group_name = "${var.db_subnet_group_name}"
     parameter_group_name = "${aws_db_parameter_group.main_rds_instance.id}"
 
     # We want the multi-az setting to be toggleable, but off by default
@@ -57,14 +57,6 @@ resource "aws_db_parameter_group" "main_rds_instance" {
     #   name = "character_set_client"
     #   value = "utf8"
     # }
-
-    tags = "${merge(var.tags, map("Name", format("%s", var.rds_instance_identifier)))}"
-}
-
-resource "aws_db_subnet_group" "main_db_subnet_group" {
-    name = "${var.rds_instance_identifier}-subnetgrp"
-    description = "RDS subnet group"
-    subnet_ids = ["${var.subnets}"]
 
     tags = "${merge(var.tags, map("Name", format("%s", var.rds_instance_identifier)))}"
 }

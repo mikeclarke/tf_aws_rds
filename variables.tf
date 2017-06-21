@@ -86,6 +86,11 @@ variable "subnets" {
     type = "list"
 }
 
+variable "db_subnet_group_name" {
+    description = "Database subnet group name"
+    type = "string"
+}
+
 variable "private_cidr" {
     description = "VPC private addressing, used for a security group"
     type = "list"
